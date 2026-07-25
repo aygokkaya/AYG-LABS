@@ -3,29 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AYG LABS | Research & Journal</title>
+    <title>AYG LABS | Engineering & Systems</title>
     
-    <!-- Modern İkon Kütüphanesi -->
+    <!-- Font Awesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
     <style>
         /* =========================================
-           KARANLIK DERGİ / BLOG ŞABLONU (GitHub Pages)
+           AYG LABS - MÜHENDİSLİK PORTFOLYO ŞABLONU
            ========================================= */
         :root {
             --bg-color: #0b0b0d;         
             --surface-color: #141417;    
+            --surface-hover: #1c1c21;
             --text-main: #f5f5f7;        
             --text-muted: #8e8e93;       
-            --accent-color: #C41230;     /* ODTÜ Kırmızısı */
+            --accent-color: #C41230;     /* ODTÜ Bordo / Kırmızı Accent */
+            --accent-glow: rgba(196, 18, 48, 0.15);
             --border-color: #222225;     
+            --code-bg: #0d1117;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
         }
 
         body {
@@ -35,10 +38,10 @@
             line-height: 1.6;
         }
 
-        /* Top Bar Accent Line */
+        /* Üst Accent Çizgisi */
         .top-stripe {
             height: 3px;
-            background-color: var(--accent-color);
+            background: linear-gradient(90deg, var(--accent-color), #ff4d6d);
             width: 100%;
         }
 
@@ -46,26 +49,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 60px;
-            background: rgba(11, 11, 13, 0.95);
+            padding: 22px 60px;
+            background: rgba(11, 11, 13, 0.9);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
 
         .logo {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: #fff;
             letter-spacing: 2px;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .logo span { color: var(--accent-color); }
 
-        nav { display: flex; gap: 30px; }
+        nav { display: flex; gap: 28px; }
 
         nav a {
             color: var(--text-muted);
@@ -75,159 +81,223 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: color 0.3s ease, transform 0.2s ease;
-        }
-
-        nav a i {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         nav a:hover { color: var(--text-main); }
-        nav a:hover i { color: var(--accent-color); transform: translateY(-2px); }
+        nav a:hover i { color: var(--accent-color); transform: translateY(-1px); }
 
-        /* Akış Bandı (Ticker) */
-        .news-ticker {
-            width: 100%;
-            background: var(--surface-color);
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 12px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .ticker-label {
-            background: var(--accent-color);
-            color: white;
-            font-weight: 700;
-            padding: 12px 20px;
-            position: absolute;
-            left: 0;
-            z-index: 10;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-        }
-
-        .ticker-track { 
-            display: inline-block; 
-            padding-left: 140px; 
-            animation: scroll-ticker 30s linear infinite; 
-        }
-
-        .ticker-item { display: inline-block; margin-right: 60px; color: var(--text-muted); }
-        .ticker-item strong { color: #fff; font-weight: 600; }
-        .ticker-item i { color: var(--accent-color); margin-right: 8px; }
-
-        @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* Ana Sayfa Butonu Sadece İç Sayfalardayken Görünecek Mantık */
+        nav a.nav-home { display: none; } 
+        body.subpage nav a.nav-home { display: flex; } 
 
         /* Ana Konteyner */
         .main-container {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 0 20px;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        /* Sayfa Başı Öne Çıkan Haber/Duyuru Alanı */
+        .announcement-box {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .announcement-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .announcement-badge {
+            background: var(--accent-glow);
+            color: var(--accent-color);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .announcement-text {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .announcement-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        /* Başlık Yapısı */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
         }
 
         .section-title {
-            font-size: 1rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--accent-color);
-            margin-bottom: 30px;
+            color: #fff;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* Banner Slider */
-        .slider-wrapper {
-            width: 100%;
-            height: 320px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
+        .section-title i { color: var(--accent-color); }
+
+        /* Proje Kartları Layout */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
+            gap: 24px;
             margin-bottom: 50px;
-            border: 1px solid var(--border-color);
         }
 
-        .slider-track { display: flex; width: 300%; height: 100%; animation: slide 18s infinite; }
-        .slider-track img { width: 33.333%; height: 100%; object-fit: cover; filter: brightness(0.7); }
-        
-        .slider-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 60%;
-            background: linear-gradient(to top, rgba(11,11,13,0.95), transparent);
-            color: #fff; display: flex; align-items: flex-end; padding: 30px;
-            font-size: 1.25rem; font-weight: 600; letter-spacing: 0.5px;
-        }
-
-        @keyframes slide { 0%, 25% { transform: translateX(0); } 33%, 58% { transform: translateX(-33.333%); } 66%, 91% { transform: translateX(-66.666%); } 100% { transform: translateX(0); } }
-
-        /* Gönderi / Proje Kartları */
-        .post-card {
+        .project-card {
             background: var(--surface-color);
             border: 1px solid var(--border-color);
-            padding: 32px;
             border-radius: 8px;
-            margin-bottom: 24px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-            display: block;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s ease;
             text-decoration: none;
         }
 
-        .post-card:hover {
-            transform: translateY(-3px);
-            border-color: #333338;
+        .project-card:hover {
+            border-color: #383840;
+            background: var(--surface-hover);
+            transform: translateY(-2px);
         }
 
-        .post-date {
-            font-size: 0.75rem;
-            color: var(--accent-color);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .post-title {
-            font-size: 1.35rem;
-            color: #fff;
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 12px;
-            font-weight: 700;
-            line-height: 1.4;
-            transition: color 0.2s ease;
         }
 
-        .post-card:hover .post-title { color: var(--accent-color); }
+        .project-title {
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 700;
+        }
 
-        .post-snippet {
+        .status-tag {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active { background: rgba(46, 160, 67, 0.15); color: #3fb950; border: 1px solid rgba(46, 160, 67, 0.3); }
+        .status-completed { background: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.3); }
+
+        .project-desc {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Teknoloji Rozetleri (Tech Stack Tags) */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: var(--code-bg);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Makale Listesi */
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .article-item {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 20px 24px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .article-item:hover {
+            border-color: #383840;
+            transform: translateX(4px);
+        }
+
+        .article-info h4 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .article-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .article-meta {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
         /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
-            padding: 40px 0;
-            margin-top: 80px;
-            font-size: 0.85rem;
+            padding: 35px 0;
+            margin-top: 60px;
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-align: center;
         }
 
         @media (max-width: 768px) { 
-            header { padding: 15px 20px; } 
-            nav { gap: 15px; } 
-            nav a span { display: none; } 
-            .post-card { padding: 20px; } 
-            .slider-wrapper { height: 220px; }
-            .slider-overlay { font-size: 1rem; padding: 20px; }
+            header { padding: 18px 20px; } 
+            nav { gap: 16px; } 
+            .grid-layout { grid-template-columns: 1fr; }
+            .announcement-box { flex-direction: column; align-items: flex-start; }
+            .announcement-content { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -236,52 +306,107 @@
     <div class="top-stripe"></div>
 
     <header>
-        <div class="logo">AYG LABS<span>.</span></div>
+        <div class="logo">
+            <i class="fa-solid fa-microchip"></i> AYG LABS<span>.</span>
+        </div>
         <nav>
-            <a href="#"><i class="fa-solid fa-house"></i> <span>Ana Sayfa</span></a>
-            <a href="#"><i class="fa-solid fa-code"></i> <span>Projeler</span></a>
-            <a href="#"><i class="fa-solid fa-pen-nib"></i> <span>Yayınlar</span></a>
-            <a href="#"><i class="fa-solid fa-user"></i> <span>Hakkımda</span></a>
+            <!-- Diğer sayfalara geçildiğinde gösterilecek Ana Sayfa linki -->
+            <a href="/" class="nav-home"><i class="fa-solid fa-arrow-left"></i> <span>Ana Sayfa</span></a>
+            
+            <a href="#projeler"><i class="fa-solid fa-diagram-project"></i> <span>Projeler</span></a>
+            <a href="#makaleler"><i class="fa-solid fa-file-code"></i> <span>Makaleler</span></a>
+            <a href="#hakkimda"><i class="fa-solid fa-terminal"></i> <span>Hakkımda</span></a>
         </nav>
     </header>
 
-    <!-- Akış Bandı -->
-    <div class="news-ticker">
-        <div class="ticker-label">AKIŞ</div>
-        <div class="ticker-track">
-            <span class="ticker-item"><i class="fa-solid fa-circle-notch fa-spin"></i> <strong>[AR-GE]</strong> C++ tabanlı otonom araç kontrol mimarisi testleri başladı.</span>
-            <span class="ticker-item"><i class="fa-solid fa-circle-notch fa-spin"></i> <strong>[YAZI]</strong> "Abyss" isimli modern odaklanma ve konformizm denemesi yayınlandı.</span>
-            <span class="ticker-item"><i class="fa-solid fa-circle-notch fa-spin"></i> <strong>[AR-GE]</strong> C++ tabanlı otonom araç kontrol mimarisi testleri başladı.</span>
-            <span class="ticker-item"><i class="fa-solid fa-circle-notch fa-spin"></i> <strong>[YAZI]</strong> "Abyss" isimli modern odaklanma ve konformizm denemesi yayınlandı.</span>
-        </div>
-    </div>
-
     <main class="main-container">
-        
-        <!-- Slider Görsel Banner -->
-        <div class="slider-wrapper">
-            <div class="slider-track">
-                <img alt="ODTÜ Kampüs" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop"/>
-                <img alt="Kodlama" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop"/>
-                <img alt="Felsefe ve Teori" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop"/>
+
+        <!-- Sayfa Başı Güncellenen Duyuru Bölümü -->
+        <div class="announcement-box">
+            <div class="announcement-content">
+                <span class="announcement-badge">Gelişme</span>
+                <span class="announcement-text">Otonom araç kontrol mimarisi için yeni ROS2 paketi derlendi ve testlerine başlandı.</span>
             </div>
-            <div class="slider-overlay">Otonom Sistemler & Felsefi Analizler</div>
+            <span class="announcement-date">Şubat 2026</span>
         </div>
 
-        <!-- İçerik Akışı -->
-        <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Son Araştırma ve Yazılar</h2>
-        
-        <article class="post-card">
-            <span class="post-date">Geliştirme / ROS2 & C++</span>
-            <h3 class="post-title">Otonom Araç Kontrol Sistemleri ve Düşük Gecikme</h3>
-            <p class="post-snippet">Gerçek zamanlı sensör verisi işleme, bellek optimizasyonları ve alt seviye sistem haberleşmesi üzerine teknik inceleme.</p>
-        </article>
+        <!-- PROJELER SEKSİYONU -->
+        <section id="projeler">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fa-solid fa-code-branch"></i> Mühendislik Projeleri</h2>
+            </div>
 
-        <article class="post-card">
-            <span class="post-date">Deneme / Metin</span>
-            <h3 class="post-title">Abyss: Derinleşme ve Konformizm</h3>
-            <p class="post-snippet">Modern bilgi çağında dikkat dağıtıcılar, felsefi sığınaklar ve bireysel odaklanma dinamikleri üzerine felsefi bir bakış.</p>
-        </article>
+            <div class="grid-layout">
+                <a href="#" class="project-card">
+                    <div>
+                        <div class="card-top">
+                            <h3 class="project-title">Otonom Robotaksi Mimarisi</h3>
+                            <span class="status-tag status-active">Aktif AR-GE</span>
+                        </div>
+                        <p class="project-desc">Kentsel otonom sürüş için düşük gecikmeli karar verme, şerit takip ve engel algılama algoritmaları.</p>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">ROS2</span>
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">LiDAR</span>
+                    </div>
+                </a>
+
+                <a href="#" class="project-card">
+                    <div>
+                        <div class="card-top">
+                            <h3 class="project-title">Embedded Sensor Fusion</h3>
+                            <span class="status-tag status-completed">Tamamlandı</span>
+                        </div>
+                        <p class="project-desc">Gömülü sistemler üzerinde IMU ve GPS verilerini birleştiren Kalman Filtresi tabanlı konum kestirim birimi.</p>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">C</span>
+                        <span class="tech-tag">ARM Cortex-M</span>
+                        <span class="tech-tag">FreeRTOS</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- MAKALELER SEKSİYONU -->
+        <section id="makaleler">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fa-solid fa-book-bookmark"></i> Teknik Yayınlar & Araştırmalar</h2>
+            </div>
+
+            <div class="article-list">
+                <a href="#" class="article-item">
+                    <div class="article-info">
+                        <h4>Gerçek Zamanlı Sistemlerde Bellek Yönetimi ve C++ Optimizasyonu</h4>
+                        <p>Kritik sistemlerde 'Heap' kullanımından kaçınma ve deterministik çalışma süreleri elde etme yöntemleri.</p>
+                    </div>
+                    <span class="article-meta">Teknik İnceleme</span>
+                </a>
+
+                <a href="#" class="article-item">
+                    <div class="article-info">
+                        <h4>ROS2 Düğüm (Node) Haberleşmesinde Düşük Gecikme Metotları</h4>
+                        <p>Zero-copy aktarımı ve CycloneDDS ayarlarıyla mikro saniye seviyesinde veri iletimi.</p>
+                    </div>
+                    <span class="article-meta">Sistem Mimarisi</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- HAKKIMDA SEKSİYONU -->
+        <section id="hakkimda">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Laboratuvar & Sistem Hakkında</h2>
+            </div>
+
+            <div class="project-card" style="cursor: default;">
+                <p class="project-desc" style="color: var(--text-main); font-size: 0.95rem;">
+                    <strong>AYG Labs</strong>; gömülü sistemler, otonom araç mimarileri ve yüksek başarımlı sistem yazılımları üzerine odaklanan bağımsız bir araştırma ve geliştirme alanıdır. Teorik bilgisayar bilimleri ilkelerini alt seviye donanım kontrolüyle birleştirerek pratik çözümler üretmeyi hedefler.
+                </p>
+            </div>
+        </section>
 
     </main>
 
